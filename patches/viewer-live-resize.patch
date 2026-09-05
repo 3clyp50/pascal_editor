@@ -1,0 +1,82 @@
+diff --git a/packages/viewer/src/components/viewer/frame-limiter.tsx b/packages/viewer/src/components/viewer/frame-limiter.tsx
+index ccd1859..a10b326 100644
+--- a/packages/viewer/src/components/viewer/frame-limiter.tsx
++++ b/packages/viewer/src/components/viewer/frame-limiter.tsx
+@@ -64,6 +64,12 @@ const FrameLimiter: React.FC<FrameLimiterProps> = ({ fps = 50, paused = false })
+   const renderer = useThree((state) => state.gl)
+   const size = useThree((state) => state.size)
+   const dpr = useThree((state) => state.viewport.dpr)
++  const sizeRef = useRef({ width: size.width, height: size.height, dpr })
++  const resizePendingRef = useRef(true)
++  useLayoutEffect(() => {
++    sizeRef.current = { width: size.width, height: size.height, dpr }
++    resizePendingRef.current = true
++  }, [size.width, size.height, dpr])
+   // Fully covered canvas (e.g. studio gallery) → stop advancing frames
+   const renderPaused = useViewer((s) => s.renderPaused)
+ 
+@@ -72,19 +78,24 @@ const FrameLimiter: React.FC<FrameLimiterProps> = ({ fps = 50, paused = false })
+     const clock = createFrameClock(nextFrameTimeRef.current)
+     let raf: number | null = null
+     let timer: ReturnType<typeof setInterval> | null = null
+-    let sizeSynced = false
++    resizePendingRef.current = true
+     const effectiveFps = Number.isFinite(fps) && fps > 0 ? fps : 50
+     const interval = 1000 / effectiveFps
+     function syncSize() {
+-      if (sizeSynced) return
+-      renderer.setPixelRatio(dpr)
++      if (!resizePendingRef.current) return false
++      const size = sizeRef.current
++      renderer.setPixelRatio(size.dpr)
+       renderer.setSize(size.width, size.height, false)
+-      sizeSynced = true
++      resizePendingRef.current = false
++      return true
+     }
+     function tick(t: DOMHighResTimeStamp) {
+       raf = requestAnimationFrame(tick)
+-      syncSize()
+-      const frameTime = clock.sample(t, interval)
++      const resized = syncSize()
++      // A resize clears the drawing buffer. Paint it in this same tick even
++      // below the FPS interval, without restarting the clock on every drag.
++      const sampledTime = clock.sample(t, interval)
++      const frameTime = sampledTime ?? (resized ? clock.step(1 / 1000) : null)
+       if (frameTime === null) return
+       nextFrameTimeRef.current = frameTime
+       timeSpan('frame-cpu', () => advance(frameTime))
+@@ -130,15 +141,12 @@ const FrameLimiter: React.FC<FrameLimiterProps> = ({ fps = 50, paused = false })
+     }
+   }, [
+     advance,
+-    dpr,
+     fps,
+     initFrameloop,
+     paused,
+     renderPaused,
+     renderer,
+     set,
+-    size.height,
+-    size.width,
+   ])
+ 
+   return null
+diff --git a/packages/viewer/src/components/viewer/index.tsx b/packages/viewer/src/components/viewer/index.tsx
+index b6c95c1..3812398 100644
+--- a/packages/viewer/src/components/viewer/index.tsx
++++ b/packages/viewer/src/components/viewer/index.tsx
+@@ -577,9 +577,10 @@ const Viewer = forwardRef<ViewerHandle, ViewerProps>(function Viewer(
+             return promise
+           }) as any
+         }
+-        resize={{
+-          debounce: 100,
+-        }}
++        // A trailing debounce leaves the drawing buffer at its old size for
++        // the entire drag (drawer, split view, or an embedding iframe resize).
++        // Observe each layout change instead of waiting for the drag to stop.
++        resize={{ debounce: 0 }}
+         shadows={{
+           type: THREE.PCFShadowMap,
+           enabled: shadowsEnabled,

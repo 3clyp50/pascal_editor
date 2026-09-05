@@ -1,0 +1,3 @@
+{
+  "/api/plugins/mint/[...path]/route": "app/api/plugins/mint/[...path]/route.js"
+}

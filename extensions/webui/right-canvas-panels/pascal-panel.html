@@ -1,0 +1,11 @@
+<div
+  class="right-canvas-surface-panel pascal-canvas-surface"
+  data-surface-id="pascal"
+  :class="{
+    'is-active': $store.rightCanvas?.isSurfaceVisible('pascal'),
+    'is-mounted': $store.rightCanvas?.isSurfaceRendered('pascal')
+  }"
+  :aria-hidden="(!$store.rightCanvas?.isSurfaceVisible('pascal')).toString()"
+>
+  <x-component path="/plugins/pascal_editor/webui/pascal-panel.html" mode="canvas"></x-component>
+</div>

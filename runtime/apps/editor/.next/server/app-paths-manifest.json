@@ -1,0 +1,15 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/health/route": "app/api/health/route.js",
+  "/api/plugins/mint/[...path]/route": "app/api/plugins/mint/[...path]/route.js",
+  "/api/scenes/[id]/events/route": "app/api/scenes/[id]/events/route.js",
+  "/api/scenes/[id]/route": "app/api/scenes/[id]/route.js",
+  "/api/scenes/route": "app/api/scenes/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js",
+  "/privacy/page": "app/privacy/page.js",
+  "/scene/[id]/page": "app/scene/[id]/page.js",
+  "/scenes/page": "app/scenes/page.js",
+  "/terms/page": "app/terms/page.js"
+}

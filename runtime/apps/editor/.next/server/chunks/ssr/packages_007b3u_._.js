@@ -1,0 +1,3 @@
+module.exports=[465783,a=>{"use strict";var b=a.i(531738);a.s(["useInteractionScope",()=>b.default])},679192,a=>{"use strict";var b=a.i(187924);a.i(232080);var c=a.i(365560);a.i(273807);var d=a.i(553288),e=a.i(619184),f=a.i(572131);a.s(["LevelOffsetGroup",0,function({children:a}){let g=(0,d.useViewer)(a=>a.selection.levelId),h=(0,f.useRef)(null);return(0,e.useFrame)(()=>{let a=h.current;if(!a)return;let b=g?c.sceneRegistry.nodes.get(g):null;a.position.y=b?b.position.y:0}),(0,b.jsx)("group",{ref:h,children:a})}])}];
+
+//# sourceMappingURL=packages_007b3u_._.js.map

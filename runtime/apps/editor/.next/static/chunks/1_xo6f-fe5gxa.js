@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,269237,e=>{"use strict";var r=e.i(843476);e.i(818350);var t=e.i(204985),o=e.i(589863);e.s(["default",0,function({node:e}){return(0,r.jsx)("group",{layers:t.EDITOR_LAYER,children:(0,r.jsx)(o.StreetInfrastructureModel,{ghost:!0,layer:t.EDITOR_LAYER,node:e})})}])}]);

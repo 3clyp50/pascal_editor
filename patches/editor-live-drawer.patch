@@ -1,0 +1,72 @@
+diff --git a/packages/editor/src/components/editor/bottom-sheet.tsx b/packages/editor/src/components/editor/bottom-sheet.tsx
+index 29f822d..1de4159 100644
+--- a/packages/editor/src/components/editor/bottom-sheet.tsx
++++ b/packages/editor/src/components/editor/bottom-sheet.tsx
+@@ -1,6 +1,6 @@
+ 'use client'
+ 
+-import { animate, motion, useMotionValue } from 'motion/react'
++import { animate, motion, useMotionValue, useMotionValueEvent } from 'motion/react'
+ import {
+   forwardRef,
+   type ReactNode,
+@@ -19,16 +19,20 @@ interface BottomSheetProps {
+   initialHeightPx: number
+   snapPointsPx: number[]
+   onCommit: (heightPx: number) => void
++  onHeightChange?: (heightPx: number) => void
+   children: ReactNode
+ }
+ 
+ const DRAG_THRESHOLD_PX = 6
+ 
+ export const BottomSheet = forwardRef<BottomSheetHandle, BottomSheetProps>(function BottomSheet(
+-  { initialHeightPx, snapPointsPx, onCommit, children },
++  { initialHeightPx, snapPointsPx, onCommit, onHeightChange, children },
+   ref,
+ ) {
+   const height = useMotionValue(initialHeightPx)
++  // The viewer must follow both the pointer and the snap spring, not just
++  // the final committed height; otherwise collapsing exposes unpainted space.
++  useMotionValueEvent(height, 'change', (px) => onHeightChange?.(px))
+   const dragStartY = useRef<number | null>(null)
+   const dragStartHeight = useRef(0)
+   const hasDragged = useRef(false)
+diff --git a/packages/editor/src/components/editor/editor-layout-mobile.tsx b/packages/editor/src/components/editor/editor-layout-mobile.tsx
+index 093a2f9..b1452da 100644
+--- a/packages/editor/src/components/editor/editor-layout-mobile.tsx
++++ b/packages/editor/src/components/editor/editor-layout-mobile.tsx
+@@ -67,6 +67,7 @@ export function EditorLayoutMobile({
+   // sheet's viewport-relative height into middle-area coordinates.
+   const [middleBottomFromViewport, setMiddleBottomFromViewport] = useState(0)
+   const [committedSheetH, setCommittedSheetH] = useState(0)
++  const [liveSheetH, setLiveSheetH] = useState(SHEET_HANDLE_PX)
+ 
+   const currentTab = sidebarTabs.find((t) => t.id === activePanel)
+ 
+@@ -182,7 +183,7 @@ export function EditorLayoutMobile({
+   const panelPenetrationInMiddle = Math.max(0, panelSheetHeight - middleBottomFromViewport)
+   // The effective "sheet height" that the viewer sits above is the larger of
+   // the primary sidebar sheet and the secondary panel sheet's penetration.
+-  const effectiveSheetH = Math.max(committedSheetH, panelPenetrationInMiddle)
++  const effectiveSheetH = Math.max(liveSheetH, panelPenetrationInMiddle)
+ 
+   // In capture mode the sheet and tab bar are hidden — the viewer should fill
+   // the entire middle area regardless of the stored sheet height.
+@@ -220,7 +221,7 @@ export function EditorLayoutMobile({
+         ref={middleRef}
+         style={{ backgroundColor: viewerBg }}
+       >
+-        {/* Viewer column: sized by committed sheet height */}
++        {/* Follow the sheet throughout pointer drags and snap animations. */}
+         <div className="absolute inset-x-0 top-0 overflow-hidden" style={{ height: viewerHeight }}>
+           <div className="relative h-full w-full">
+             {(viewerToolbarLeft || viewerToolbarRight) && !isCaptureMode && (
+@@ -250,6 +251,7 @@ export function EditorLayoutMobile({
+           <BottomSheet
+             initialHeightPx={SHEET_HANDLE_PX}
+             onCommit={setCommittedSheetH}
++            onHeightChange={setLiveSheetH}
+             ref={sheetRef}
+             snapPointsPx={snapPointsPx}
+           >

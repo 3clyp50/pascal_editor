@@ -1,0 +1,3 @@
+module.exports=[888536,a=>{"use strict";var b=a.i(187924);a.i(232080);var c=a.i(365560);a.i(273807);var d=a.i(970189),e=a.i(381040),f=a.i(572131);let g=({node:a})=>{let g=(0,f.useRef)(null);(0,c.useRegistry)(a.id,a.type,g);let h=(0,e.useNodeEvents)(a,"level");return(0,b.jsx)("group",{ref:g,...h,children:a.children.map(a=>(0,b.jsx)(d.NodeRenderer,{nodeId:a},a))})};a.s(["LevelRenderer",0,g,"default",0,g])}];
+
+//# sourceMappingURL=packages_nodes_dist_level_renderer_0etyyf0.js.map

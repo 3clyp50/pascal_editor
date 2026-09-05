@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0-beta.1",
+  "entrypoint": "apps/editor/server.js",
+  "mcpEntrypoint": "../mcp/launch.mjs",
+  "mcpTransport": "stdio",
+  "mcpPackageVersion": "1.0.0-beta.6",
+  "mcpNodeMinimum": "22.13.0",
+  "healthPath": "/pascal/api/health"
+}

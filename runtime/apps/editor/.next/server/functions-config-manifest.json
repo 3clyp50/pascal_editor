@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "functions": {
+    "/api/plugins/mint/[...path]": {},
+    "/api/scenes/[id]/events": {}
+  }
+}

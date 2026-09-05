@@ -1,0 +1,3 @@
+module.exports=[874480,a=>{"use strict";var b=a.i(187924);a.i(273807);var c=a.i(553288),d=a.i(572131),e=a.i(452332);a.s(["default",0,({node:a})=>{let f=(0,c.useViewer)(a=>a.shading),g=(0,d.useMemo)(()=>(0,e.buildShelfGeometry)(a,void 0,f),[a,f]);return(0,d.useEffect)(()=>{let a=[];return g.traverse(b=>{if(b.raycast=()=>{},!b.material)return;let c=b=>{let c=b.clone();return c.transparent=!0,c.opacity=.5,c.depthWrite=!1,a.push(c),c};Array.isArray(b.material)?b.material=b.material.map(c):b.material=c(b.material)}),()=>{for(let b of a)b.dispose();g.traverse(a=>{a.geometry?.dispose()})}},[g]),(0,b.jsx)("primitive",{object:g})}])}];
+
+//# sourceMappingURL=packages_nodes_dist_shelf_preview_0wazulg.js.map

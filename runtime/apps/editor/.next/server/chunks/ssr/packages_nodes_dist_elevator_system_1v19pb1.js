@@ -1,0 +1,3 @@
+module.exports=[191875,a=>{"use strict";var b=a.i(187924);a.i(232080);var c=a.i(611133),d=a.i(514447);a.i(273807);var e=a.i(535915),f=a.i(619184);function g(){return(0,f.useFrame)(({clock:a},b)=>{(0,d.stepElevatorRuntimes)(1e3*a.getElapsedTime(),b)},2),null}a.s(["default",0,function(){return(0,b.jsxs)(b.Fragment,{children:[(0,b.jsx)(g,{}),(0,b.jsx)(e.ElevatorInteractionSystem,{}),(0,b.jsx)(c.ElevatorOpeningSystem,{})]})}])}];
+
+//# sourceMappingURL=packages_nodes_dist_elevator_system_1v19pb1.js.map

@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+.env.*
+/config.json
+/.toggle-*
+/runtime/.data/
+/runtime/.state/
+/runtime/apps/editor/.next/cache/
+/mcp/node_modules/

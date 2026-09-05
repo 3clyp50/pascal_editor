@@ -1,0 +1,3 @@
+module.exports=[550570,a=>{"use strict";a.i(232080);var b=a.i(926117),c=a.i(572131),d=a.i(978525);function e(a){let b=new Map;for(let c of Object.values(a))"fence"===c.type&&c.supportSlabId&&b.set(c.id,(0,d.resolveFenceLiftElevationForNodes)(c,a));return b}a.s(["default",0,()=>((0,c.useEffect)(()=>{let a=e(b.useScene.getState().nodes);return b.useScene.subscribe(b=>{let c=e(b.nodes);for(let[d,e]of c.entries())a.get(d)!==e&&b.markDirty(d);a=c})},[]),null)])}];
+
+//# sourceMappingURL=packages_nodes_dist_fence_system_00q9spe.js.map

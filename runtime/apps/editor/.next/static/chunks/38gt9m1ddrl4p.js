@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,254095,t=>{t.q("/pascal/_next/static/media/mint-pascal-hero.3g3kxy5bqg0z5.jpg")}]);

@@ -1,0 +1,5 @@
+enabled: true
+mcp_enabled: true
+port: 3101
+start_timeout_seconds: 90
+health_timeout_seconds: 3

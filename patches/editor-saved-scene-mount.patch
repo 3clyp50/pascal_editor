@@ -1,0 +1,83 @@
+--- a/apps/editor/app/scenes/page.tsx
++++ b/apps/editor/app/scenes/page.tsx
+@@ -20,7 +20,7 @@
+ 
+ async function fetchScenes(): Promise<SceneMeta[]> {
+   const base = await resolveBaseUrl()
+-  const response = await fetch(`${base}/api/scenes?limit=50`, {
++  const response = await fetch(`${base}/pascal/api/scenes?limit=50`, {
+     cache: 'no-store',
+   })
+   if (!response.ok) {
+--- a/apps/editor/app/scene/[id]/page.tsx
++++ b/apps/editor/app/scene/[id]/page.tsx
+@@ -24,7 +24,7 @@
+ 
+ async function fetchScene(id: string): Promise<SceneWithGraph | null> {
+   const base = await resolveBaseUrl()
+-  const response = await fetch(`${base}/api/scenes/${encodeURIComponent(id)}`, {
++  const response = await fetch(`${base}/pascal/api/scenes/${encodeURIComponent(id)}`, {
+     cache: 'no-store',
+   })
+   if (response.status === 404) {
+--- a/apps/editor/components/scene-loader.tsx
++++ b/apps/editor/components/scene-loader.tsx
+@@ -150,7 +150,7 @@
+       }
+ 
+       try {
+-        const response = await fetch(`/api/scenes/${meta.id}`, {
++        const response = await fetch(`/pascal/api/scenes/${meta.id}`, {
+           method: 'PUT',
+           headers: {
+             'Content-Type': 'application/json',
+@@ -196,7 +196,7 @@
+   )
+ 
+   useEffect(() => {
+-    const source = new EventSource(`/api/scenes/${meta.id}/events`)
++    const source = new EventSource(`/pascal/api/scenes/${meta.id}/events`)
+ 
+     source.addEventListener('scene', (event) => {
+       let payload: LiveSceneEvent
+@@ -228,9 +228,9 @@
+ 
+   const handleThumb = useCallback(
+     async (_blob: Blob) => {
+-      // TODO(phase7): upload thumbnail via POST /api/scenes/[id]/thumbnail.
++      // TODO(phase7): upload thumbnail via POST /pascal/api/scenes/[id]/thumbnail.
+       // Stub endpoint is not yet implemented in v0.1 — skip upload for now.
+-      await fetch(`/api/scenes/${meta.id}/thumbnail`, {
++      await fetch(`/pascal/api/scenes/${meta.id}/thumbnail`, {
+         method: 'POST',
+         // Intentionally no body — endpoint is a stub.
+       }).catch(() => {
+--- a/apps/editor/components/save-button.tsx
++++ b/apps/editor/components/save-button.tsx
+@@ -28,7 +28,7 @@
+     setIsCreating(true)
+     setError(null)
+     try {
+-      const response = await fetch('/api/scenes', {
++      const response = await fetch('/pascal/api/scenes', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ name: 'Untitled scene', graph: EMPTY_GRAPH }),
+@@ -80,7 +80,7 @@
+     setIsSaving(true)
+     setStatus(null)
+     try {
+-      const response = await fetch(`/api/scenes/${sceneId}`, {
++      const response = await fetch(`/pascal/api/scenes/${sceneId}`, {
+         method: 'PUT',
+         headers: {
+           'Content-Type': 'application/json',
+@@ -115,7 +115,7 @@
+     setIsSaving(true)
+     setStatus(null)
+     try {
+-      const response = await fetch('/api/scenes', {
++      const response = await fetch('/pascal/api/scenes', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ name: newName, graph }),

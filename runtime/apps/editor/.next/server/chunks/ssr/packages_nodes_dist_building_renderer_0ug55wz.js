@@ -1,0 +1,3 @@
+module.exports=[79091,a=>{"use strict";var b=a.i(187924);a.i(232080);var c=a.i(365560);a.i(273807);var d=a.i(970189),e=a.i(381040),f=a.i(572131);let g=({node:a})=>{let g=(0,f.useRef)(null);(0,c.useRegistry)(a.id,a.type,g);let h=(0,e.useNodeEvents)(a,"building");return(0,b.jsx)("group",{position:a.position,ref:g,rotation:[a.rotation[0],a.rotation[1],a.rotation[2]],...h,children:(a.children??[]).map(a=>(0,b.jsx)(d.NodeRenderer,{nodeId:a},a))})};a.s(["BuildingRenderer",0,g,"default",0,g])}];
+
+//# sourceMappingURL=packages_nodes_dist_building_renderer_0ug55wz.js.map

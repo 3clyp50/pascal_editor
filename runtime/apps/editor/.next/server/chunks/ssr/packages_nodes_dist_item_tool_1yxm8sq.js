@@ -1,0 +1,3 @@
+module.exports=[762779,a=>{"use strict";var b=a.i(187924);a.i(973550);var c=a.i(259473),d=a.i(419783),e=a.i(255980),f=a.i(612390);function g({selectedItem:a}){let h=(0,d.useDraftNode)(),i=(0,f.usePlacementCoordinator)({asset:a,draftNode:h,initDraft:b=>{a&&!a.attachTo&&h.create(b,a)},onCommitted:()=>((0,c.triggerSFX)("sfx:item-place"),"repeat"===e.useEditor.getState().getContinuation("point"))});return(0,b.jsx)(b.Fragment,{children:i})}a.s(["default",0,function(){let a=(0,e.useEditor)(a=>a.selectedItem);return a?(0,b.jsx)(g,{selectedItem:a}):null}])}];
+
+//# sourceMappingURL=packages_nodes_dist_item_tool_1yxm8sq.js.map

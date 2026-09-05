@@ -1,0 +1,20 @@
+{
+  "pages": {},
+  "app": {
+    "[project]/apps/editor/app/terms/page": [
+      "static/media/GeistPixel_Square.p.2hsizu-z_gncm.woff2",
+      "static/media/GeistPixel_Grid.p.2ss63b6eqyzy4.woff2",
+      "static/media/GeistPixel_Circle.p.0rqe0db4f0cia.woff2",
+      "static/media/GeistPixel_Triangle.p.04xw1z5oncddb.woff2",
+      "static/media/GeistPixel_Line.p.1gvmpev-r-ty_.woff2",
+      "static/media/GeistVF-s.p.0e569l9b0bre8.woff",
+      "static/media/GeistMonoVF-s.p.1lv5tp2fpjxdz.woff",
+      "static/media/c6e2684784a55443-s.p.2p4adm_386h58.woff2",
+      "static/media/a083361d37caf3d1-s.p.0s4utfvp8prsy.woff2",
+      "static/media/6c98c9fb873995d2-s.p.22ggkaf3lyu8c.woff2",
+      "static/media/0595f7052377a1a2-s.p.2lpos000q_nzo.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pagesUsingSizeAdjust": false
+}

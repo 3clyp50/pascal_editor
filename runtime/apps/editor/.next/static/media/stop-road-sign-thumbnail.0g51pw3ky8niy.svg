@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="title desc">
+  <title id="title">Stop road sign</title>
+  <desc id="desc">A red octagonal stop sign on a galvanized roadside post.</desc>
+  <defs>
+    <linearGradient id="stopBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef2f6"/><stop offset="1" stop-color="#d4dce3"/></linearGradient>
+    <linearGradient id="stopMetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#20262c"/><stop offset=".48" stop-color="#69757e"/><stop offset="1" stop-color="#2d353c"/></linearGradient>
+    <filter id="stopShadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="10"/><feOffset dy="9"/><feComponentTransfer><feFuncA type="linear" slope=".22"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="640" height="640" rx="44" fill="url(#stopBg)"/>
+  <path d="M0 522 Q160 480 320 508 T640 494 V640 H0Z" fill="#c7cfd5" opacity=".62"/>
+  <ellipse cx="320" cy="558" rx="128" ry="27" fill="#59636d" opacity=".2"/>
+  <g filter="url(#stopShadow)">
+    <path d="M294 548h52l-7-214h-38z" fill="url(#stopMetal)"/>
+    <path d="M298 548h9V337h-9zM333 548h9V337h-9z" fill="#171c21" opacity=".7"/>
+    <polygon points="320,75 431,121 477,232 431,343 320,389 209,343 163,232 209,121" fill="#c93432" stroke="#252a2f" stroke-width="10" stroke-linejoin="round"/>
+    <polygon points="320,92 419,133 460,232 419,331 320,372 221,331 180,232 221,133" fill="#c93432" stroke="#ffffff" stroke-width="9" stroke-linejoin="round"/>
+    <text x="320" y="258" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="74" font-weight="800" letter-spacing="3" fill="#ffffff">STOP</text>
+    <path d="M207 128 Q320 78 433 128" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="5"/>
+  </g>
+</svg>

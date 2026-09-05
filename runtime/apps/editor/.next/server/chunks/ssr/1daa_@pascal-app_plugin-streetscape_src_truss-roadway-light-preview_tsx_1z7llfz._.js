@@ -1,0 +1,3 @@
+module.exports=[873443,a=>{"use strict";var b=a.i(187924);a.i(973550);var c=a.i(596540),d=a.i(845546);a.s(["default",0,function({node:a}){return(0,b.jsx)("group",{layers:c.EDITOR_LAYER,children:(0,b.jsx)(d.TrussRoadwayLightModel,{ghost:!0,layer:c.EDITOR_LAYER,node:a})})}])}];
+
+//# sourceMappingURL=1daa_%40pascal-app_plugin-streetscape_src_truss-roadway-light-preview_tsx_1z7llfz._.js.map

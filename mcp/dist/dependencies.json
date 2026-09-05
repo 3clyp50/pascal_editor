@@ -1,0 +1,215 @@
+[
+  {
+    "name": "@modelcontextprotocol/sdk",
+    "version": "1.30.0",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/modelcontextprotocol/typescript-sdk.git"
+    }
+  },
+  {
+    "name": "@pascal-app/core",
+    "version": "1.0.0-beta.5",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/pascalorg/editor.git",
+      "directory": "packages/core"
+    }
+  },
+  {
+    "name": "@pascal-app/lingo",
+    "version": "0.2.1",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/pascalorg/lingo.git",
+      "directory": "packages/lingo"
+    }
+  },
+  {
+    "name": "@pascal-app/mcp",
+    "version": "1.0.0-beta.6",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/pascalorg/editor.git",
+      "directory": "packages/mcp"
+    }
+  },
+  {
+    "name": "@react-three/fiber",
+    "version": "9.7.0",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/pmndrs/react-three-fiber.git"
+    }
+  },
+  {
+    "name": "ajv",
+    "version": "8.20.0",
+    "license": "MIT",
+    "repository": "ajv-validator/ajv"
+  },
+  {
+    "name": "ajv-formats",
+    "version": "3.0.1",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/ajv-validator/ajv-formats.git"
+    }
+  },
+  {
+    "name": "dedent",
+    "version": "1.7.2",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/dmnd/dedent"
+    }
+  },
+  {
+    "name": "fast-deep-equal",
+    "version": "3.1.3",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/epoberezkin/fast-deep-equal.git"
+    }
+  },
+  {
+    "name": "fast-uri",
+    "version": "3.1.7",
+    "license": "BSD-3-Clause",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/fastify/fast-uri.git"
+    }
+  },
+  {
+    "name": "idb-keyval",
+    "version": "6.3.0",
+    "license": "Apache-2.0",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/jakearchibald/idb-keyval.git"
+    }
+  },
+  {
+    "name": "its-fine",
+    "version": "2.0.0",
+    "license": "MIT",
+    "repository": "https://github.com/pmndrs/its-fine"
+  },
+  {
+    "name": "json-schema-traverse",
+    "version": "1.0.0",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/epoberezkin/json-schema-traverse.git"
+    }
+  },
+  {
+    "name": "mitt",
+    "version": "3.0.1",
+    "license": "MIT",
+    "repository": "developit/mitt"
+  },
+  {
+    "name": "nanoid",
+    "version": "5.1.16",
+    "license": "MIT",
+    "repository": "ai/nanoid"
+  },
+  {
+    "name": "react",
+    "version": "19.2.8",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/react/react.git",
+      "directory": "packages/react"
+    }
+  },
+  {
+    "name": "react-use-measure",
+    "version": "2.1.7",
+    "license": "MIT",
+    "repository": "https://github.com/pmndrs/react-use-measure"
+  },
+  {
+    "name": "scheduler",
+    "version": "0.27.0",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/facebook/react.git",
+      "directory": "packages/scheduler"
+    }
+  },
+  {
+    "name": "suspend-react",
+    "version": "0.1.3",
+    "license": "MIT",
+    "repository": "pmndrs/suspend-react"
+  },
+  {
+    "name": "three",
+    "version": "0.185.1",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/mrdoob/three.js"
+    }
+  },
+  {
+    "name": "use-sync-external-store",
+    "version": "1.6.0",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/facebook/react.git",
+      "directory": "packages/use-sync-external-store"
+    }
+  },
+  {
+    "name": "zod",
+    "version": "4.3.5",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/colinhacks/zod.git"
+    }
+  },
+  {
+    "name": "zod-to-json-schema",
+    "version": "3.25.2",
+    "license": "ISC",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/StefanTerdell/zod-to-json-schema"
+    }
+  },
+  {
+    "name": "zundo",
+    "version": "2.3.0",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/charkour/zundo.git"
+    }
+  },
+  {
+    "name": "zustand",
+    "version": "5.0.15",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/pmndrs/zustand.git"
+    }
+  }
+]

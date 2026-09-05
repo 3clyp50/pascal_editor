@@ -1,0 +1,17 @@
+{
+  "name": "a0-pascal-editor-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "@pascal-app/core": "1.0.0-beta.5",
+    "@pascal-app/mcp": "1.0.0-beta.6",
+    "esbuild": "0.28.2",
+    "zod": "4.3.5"
+  }
+}

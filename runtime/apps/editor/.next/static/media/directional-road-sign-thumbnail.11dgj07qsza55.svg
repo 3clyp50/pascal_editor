@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="title desc">
+  <title id="title">Directional road sign</title>
+  <desc id="desc">A blue directional wayfinding sign with a white arrow and WAY label on a roadside post.</desc>
+  <defs>
+    <linearGradient id="directionalBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef2f6"/><stop offset="1" stop-color="#d4dce3"/></linearGradient>
+    <linearGradient id="directionalMetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#20262c"/><stop offset=".48" stop-color="#69757e"/><stop offset="1" stop-color="#2d353c"/></linearGradient>
+    <filter id="directionalShadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="10"/><feOffset dy="9"/><feComponentTransfer><feFuncA type="linear" slope=".22"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="640" height="640" rx="44" fill="url(#directionalBg)"/>
+  <path d="M0 522 Q160 480 320 508 T640 494 V640 H0Z" fill="#c7cfd5" opacity=".62"/>
+  <ellipse cx="320" cy="558" rx="128" ry="27" fill="#59636d" opacity=".2"/>
+  <g filter="url(#directionalShadow)">
+    <path d="M294 548h52l-7-206h-38z" fill="url(#directionalMetal)"/>
+    <path d="M298 548h9V343h-9zM333 548h9V343h-9z" fill="#171c21" opacity=".7"/>
+    <rect x="112" y="137" width="416" height="190" rx="17" fill="#285a9f" stroke="#252a2f" stroke-width="10"/>
+    <rect x="130" y="155" width="380" height="154" rx="8" fill="#285a9f" stroke="#f7f4e9" stroke-width="7"/>
+    <path d="M165 232 H332 V194 L442 232 L332 270 V246 H165Z" fill="#ffffff"/>
+    <text x="304" y="205" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="49" font-weight="800" letter-spacing="2" fill="#f7f4e9">WAY</text>
+    <path d="M142 166 Q320 128 498 166" fill="none" stroke="#ffffff" stroke-opacity=".25" stroke-width="6"/>
+  </g>
+</svg>

@@ -1,0 +1,3 @@
+module.exports=[66637,a=>{"use strict";var b=a.i(187924);a.i(232080);var c=a.i(836640),d=a.i(232236),e=a.i(365560);a.i(273807);var f=a.i(381040),g=a.i(572131),h=a.i(221084);a.s(["default",0,function({node:a}){let i=(0,g.useRef)(null),j=(0,f.useNodeEvents)(a,"streetscape:utility-pole");(0,e.useRegistry)(a.id,a.type,i);let k=(0,d.useLiveTransforms)(b=>b.get(a.id)),l=(0,c.useLiveNodeOverrides)(b=>b.get(a.id)),m=l?{...a,...l}:a,n=k?.position??m.position??[0,0,0],o=m.rotation??[0,0,0],p=k?[o[0],k.rotation,o[2]]:o;return(0,b.jsx)("group",{position:n,ref:i,rotation:p,visible:!1!==m.visible,...j,children:(0,b.jsx)(h.UtilityPoleModel,{node:m})})}])}];
+
+//# sourceMappingURL=1q96_modules_%40pascal-app_plugin-streetscape_src_utility-pole-renderer_tsx_0msxirf._.js.map

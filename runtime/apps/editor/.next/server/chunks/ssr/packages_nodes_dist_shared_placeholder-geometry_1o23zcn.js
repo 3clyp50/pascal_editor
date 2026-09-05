@@ -1,0 +1,3 @@
+module.exports=[264945,a=>{"use strict";var b=a.i(735258);a.s(["createPlaceholderGeometry",0,function(a=0){let c=new b.BufferGeometry;c.userData.placeholder=!0,c.setAttribute("position",new b.Float32BufferAttribute(new Float32Array(9),3)),c.setAttribute("normal",new b.Float32BufferAttribute(new Float32Array(9),3)),c.setAttribute("uv",new b.Float32BufferAttribute(new Float32Array(6),2)),c.setAttribute("uv2",new b.Float32BufferAttribute(new Float32Array(6),2));for(let b=0;b<a;b++)c.addGroup(0,0,b);return c}])}];
+
+//# sourceMappingURL=packages_nodes_dist_shared_placeholder-geometry_1o23zcn.js.map

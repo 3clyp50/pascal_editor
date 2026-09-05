@@ -1,0 +1,178 @@
+<html class="pascal-modal">
+
+<head>
+  <title>Pascal Editor</title>
+  <script type="module">
+    import { store } from "/plugins/pascal_editor/webui/pascal-store.js";
+  </script>
+</head>
+
+<body class="pascal-modal-body">
+  <div x-data class="pascal-panel-root">
+    <template x-if="$store.pascalEditor">
+      <div
+        class="pascal-panel"
+        x-create="$store.pascalEditor.onOpen($el, xAttrs($el) || {})"
+        x-destroy="$store.pascalEditor.cleanup($el)"
+      >
+        <template x-if="$store.pascalEditor.loading">
+          <div class="pascal-loading" role="status">
+            <x-icon name="progress_activity" class="spinning"></x-icon>
+            <span>Starting Pascal Editor…</span>
+          </div>
+        </template>
+        <template x-if="$store.pascalEditor.error && !$store.pascalEditor.loading && !$store.pascalEditor.activeIframe()">
+          <div class="pascal-loading pascal-retry-wrap">
+            <p class="pascal-retry-text">The Pascal Editor runtime could not be started.</p>
+            <button type="button" class="pascal-retry" @click="$store.pascalEditor.retry()">
+              <x-icon name="refresh"></x-icon>
+              <span>Retry</span>
+            </button>
+          </div>
+        </template>
+      </div>
+    </template>
+  </div>
+
+  <style>
+    .modal-inner.pascal-modal {
+      box-sizing: border-box;
+      container-type: inline-size;
+      width: min(86vw, 1280px);
+      height: min(90vh, 940px);
+      min-width: min(320px, calc(100vw - 16px));
+      min-height: min(480px, calc(100vh - 16px));
+      max-width: calc(100vw - 16px);
+      max-height: calc(100vh - 16px);
+      resize: both;
+      border: 1px solid color-mix(in srgb, var(--color-border) 75%, transparent);
+      border-radius: 7px;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+      background: color-mix(in srgb, var(--color-background) 94%, #000 6%);
+    }
+
+    /* Keep the loader and Alpine gate in the same flex sizing chain as the
+       panel. Otherwise an iframe inside a modal falls back to its 150px
+       intrinsic height, irrespective of the modal body's actual height. */
+    .pascal-modal-body > x-component,
+    .pascal-canvas-surface > x-component,
+    .pascal-panel-root {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 0;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .modal-inner.pascal-modal .modal-header {
+      min-height: 34px;
+      padding: 0.35rem 0.75rem 0.35rem 1rem;
+      user-select: none;
+      background: color-mix(in srgb, var(--color-background) 92%, #000 8%);
+      border-bottom: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+    }
+
+    .modal-inner.pascal-modal .modal-scroll {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .modal-inner.pascal-modal .modal-bd.pascal-modal-body {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      padding: 0;
+      background: #101216;
+    }
+
+    .pascal-panel {
+      position: relative;
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      background: #101216;
+    }
+
+    .pascal-panel > iframe.pascal-editor-frame {
+      display: block;
+      flex: 1 1 auto;
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      border: 0;
+      background: #101216;
+    }
+
+    /* Keep the host's pointerup in the host document while its divider is
+       dragged across the iframe; otherwise the resize can remain stuck. */
+    body.right-canvas-resizing .pascal-editor-frame {
+      pointer-events: none;
+    }
+
+    .pascal-loading {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: color-mix(in srgb, var(--color-text) 70%, transparent);
+      background: #101216;
+    }
+
+    .pascal-loading x-icon.spinning {
+      animation: pascal-spin 1.4s linear infinite;
+    }
+
+    .pascal-retry-wrap {
+      text-align: center;
+    }
+
+    .pascal-retry-text {
+      margin: 0 0 6px 0;
+      font-size: 0.85rem;
+    }
+
+    .pascal-retry {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.4rem 0.9rem;
+      font: inherit;
+      font-size: 0.85rem;
+      color: var(--color-text);
+      background: color-mix(in srgb, var(--color-primary) 18%, transparent);
+      border: 1px solid color-mix(in srgb, var(--color-primary) 45%, var(--color-border));
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .pascal-retry:hover {
+      background: color-mix(in srgb, var(--color-primary) 28%, transparent);
+    }
+
+    @keyframes pascal-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,948337,e=>{"use strict";let t=0;e.s(["hiddenWallPointerEventsHeld",0,()=>t>0,"holdHiddenWallPointerEvents",0,()=>{t+=1;let e=!1;return()=>{e||(e=!0,t-=1)}}])}]);
