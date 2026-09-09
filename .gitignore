@@ -9,3 +9,4 @@ __pycache__/
 /runtime/.state/
 /runtime/apps/editor/.next/cache/
 /mcp/node_modules/
+/.deps/

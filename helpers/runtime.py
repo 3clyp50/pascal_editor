@@ -2,7 +2,7 @@
 
 Spawns the Next.js standalone server as a detached loopback child process and
 exposes start/stop/status/health helpers used by the API handlers and the
-startup migration hook.
+plugin lifecycle hooks.
 """
 from __future__ import annotations
 
@@ -19,6 +19,8 @@ from pathlib import Path
 
 PLUGIN_NAME = "pascal_editor"
 PLUGIN_DIR = Path(__file__).resolve().parent.parent
+DEPS_DIR = PLUGIN_DIR / ".deps"
+NODE_DIR = DEPS_DIR / "node"
 RUNTIME_DIR = PLUGIN_DIR / "runtime"
 RUNTIME_ENTRY = RUNTIME_DIR / "apps" / "editor" / "server.js"
 STATE_DIR = RUNTIME_DIR / ".state"
@@ -44,8 +46,13 @@ def _plugin_config() -> dict:
 
 
 def get_config() -> dict:
-    """Public alias for :func:`_plugin_config` (used by execute.py)."""
+    """Return the effective plugin configuration."""
     return _plugin_config()
+
+
+def node_executable() -> str | None:
+    local = NODE_DIR / "bin" / "node"
+    return str(local) if local.is_file() else shutil.which("node")
 
 
 def ensure_directories() -> None:
@@ -157,7 +164,7 @@ def stop_runtime(cfg: dict | None = None) -> dict:
 
 
 def _spawn() -> int:
-    node = shutil.which("node") or "node"
+    node = node_executable() or "node"
     with open(LOG_FILE, "ab") as log:
         proc = subprocess.Popen(
             [node, str(RUNTIME_ENTRY)],
@@ -189,7 +196,7 @@ def start_runtime(cfg: dict | None = None) -> dict:
     if not RUNTIME_ENTRY.exists():
         return {
             "state": "error",
-            "error": "runtime missing. Run the Pascal Editor install action once to vendor the editor runtime.",
+            "error": "Bundled editor runtime missing. Reinstall Pascal Editor through Plugins.",
         }
     with _LOCK:
         if is_running():
@@ -222,7 +229,7 @@ def get_status(cfg: dict | None = None) -> dict:
         "url": "/pascal/",
         "version": RUNTIME_VERSION,
         "runtime_present": RUNTIME_ENTRY.exists(),
-        "node": shutil.which("node"),
+        "node": node_executable(),
     }
     if status["running"]:
         status["state"] = "running"

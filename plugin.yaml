@@ -1,7 +1,7 @@
 name: pascal_editor
 title: Pascal Editor
 description: Embed Pascal's open-source 3D building editor in the docked or modal canvas, with bundled MCP tools automatically registered for Agent Zero scene editing.
-version: 1.2.0
+version: 1.2.1
 settings_sections:
   - developer
 per_project_config: false

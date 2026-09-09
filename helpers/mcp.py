@@ -5,7 +5,6 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 import json
 import re
-import shutil
 import subprocess
 import threading
 from copy import deepcopy
@@ -22,7 +21,7 @@ _LOCK = threading.RLock()
 def prepare() -> None:
     """The distributable includes the bundle; installation never runs npm scripts."""
     runtime.ensure_directories()
-    node = shutil.which("node")
+    node = runtime.node_executable()
     if not node:
         raise RuntimeError("Pascal MCP requires Node.js >=22.13 (not installed).")
     version = subprocess.run([node, "-p", "process.versions.node"], check=True,
@@ -40,7 +39,7 @@ def prepare() -> None:
 
 def server_config() -> dict:
     return {
-        "type": "stdio", "command": shutil.which("node") or "node",
+        "type": "stdio", "command": runtime.node_executable() or "node",
         "args": [str(ENTRY)], "init_timeout": 30, "tool_timeout": 120,
         "description": "Pascal Editor — local saved-scene editing. Supply sceneId on every scene tool call.",
     }

@@ -4,7 +4,7 @@ Agent Zero plugin that embeds the open-source Pascal 3D editor in the right canv
 
 ## Installation
 
-This **1.2.0 Linux x64** package includes the prebuilt editor runtime and MCP bundle. It requires Agent Zero with plugin and right-canvas support, and **Node.js 22.13 or newer** inside the Agent Zero runtime. The bundled native libraries target Linux x64; other platforms need their own runtime build.
+This **1.2.1 Linux x64** package includes the prebuilt editor runtime and MCP bundle. It requires Agent Zero with plugin and right-canvas support, and Linux x64 inside the Agent Zero runtime. The install hook reuses **Node.js 22.13 or newer** when available, otherwise downloads a checksum-verified Node.js **22.22.0** into the plugin's `.deps/node/` directory. This fallback requires access to `nodejs.org` and never changes system packages. The bundled native libraries target Linux x64; other platforms need their own runtime build.
 
 In Agent Zero's Plugins page, install from this Git repository:
 
@@ -12,7 +12,7 @@ In Agent Zero's Plugins page, install from this Git repository:
 https://github.com/3clyp50/pascal_editor
 ```
 
-Refresh Agent Zero after installation, then select **Pascal Editor** in the right canvas. The install hook registers its MCP tools automatically.
+Refresh Agent Zero after installation, then select **Pascal Editor** in the right canvas. The install hook sets up dependencies, starts the editor, and registers its MCP tools automatically. No Execute action or manual setup command is needed.
 
 ## Screenshots
 
@@ -52,9 +52,9 @@ After updating the plugin, save any unsaved scene and refresh Agent Zero to load
 
 ## Bundled MCP and AI editing
 
-Installing this plugin through Agent Zero automatically runs `hooks.py:install()`. It validates the bundled MCP distribution and Node.js **22.13 or newer**, then registers the `pascal_editor` stdio server in Agent Zero's existing MCP settings. No separate chat UI, global npm installation, cloud account, API key, HTTP MCP listener, or persistent MCP daemon is added.
+Installing this plugin through Agent Zero automatically runs `hooks.py:install()`. It prepares Node.js, initializes the editor and its local storage, validates the bundled MCP distribution, then registers the `pascal_editor` stdio server in Agent Zero's existing MCP settings. No separate chat UI, global npm installation, cloud account, API key, HTTP MCP listener, or persistent MCP daemon is added.
 
-The MCP starts on demand through Agent Zero's normal MCP client. The editor and MCP share `runtime/.data/pascal.db`. Installation/update is rerunnable, preserves unrelated MCP servers and per-server preferences, refreshes Pascal's tool catalog, and rolls back newly written registration if initialization fails. The startup extension also reconciles registration before the framework's normal MCP initialization. Uninstall removes only this plugin's MCP registration and stops the editor runtime. **Export/back up saved scenes before uninstalling: Agent Zero deletes the plugin directory, including its scene database.**
+The MCP starts on demand through Agent Zero's normal MCP client. The editor and MCP share `runtime/.data/pascal.db`. Installation/update is rerunnable, preserves unrelated MCP servers and per-server preferences, refreshes Pascal's tool catalog, and rolls back newly written registration if initialization fails. The startup extension calls the same hook to restore the editor and reconcile registration before the framework's normal MCP initialization. Disabled plugins are not started. Uninstall removes this plugin's MCP registration, stops the editor, and deletes its downloaded `.deps/` dependencies. Shared system Node.js is left intact; bundled editor dependencies are deleted with the plugin directory. **Export/back up saved scenes before uninstalling: Agent Zero deletes the plugin directory, including its scene database.**
 
 ### Using it
 
@@ -74,11 +74,11 @@ Agent Zero currently starts a fresh stdio session per tool call. The bundled ada
 
 ### Building and verification
 
-End-user installation uses the prebuilt `mcp/dist/` bundle and does **not** run npm or download dependencies. To rebuild it as a developer, run `npm ci --ignore-scripts --no-audit --no-fund` followed by `node build.mjs` inside `mcp/`. Exact dependencies are pinned in `package-lock.json`; Zod 4.3.5 is pinned for compatibility with the published Pascal core schemas. Retain the generated dependency inventory and full license notices with the bundle. See `ATTRIBUTION.md`.
+End-user installation uses the prebuilt `mcp/dist/` bundle and does **not** run npm. Only a missing or outdated Node.js requires a download through `hooks.py`. To rebuild it as a developer, run `npm ci --ignore-scripts --no-audit --no-fund` followed by `node build.mjs` inside `mcp/`. Exact dependencies are pinned in `package-lock.json`; Zod 4.3.5 is pinned for compatibility with the published Pascal core schemas. Retain the generated dependency inventory and full license notices with the bundle. See `ATTRIBUTION.md`.
 
-From `/a0`, run `/opt/venv-a0/bin/python -m unittest discover -s usr/plugins/pascal_editor/tests -v`. The tests exercise registration, cleanup, failure rollback, disabled launch, small SSE chunks, and actual MCP calls through Agent Zero's client with isolated scene storage. Browser integration was additionally verified with a temporary room and door, live events, and dock-to-modal handoff. Full framework-suite and fresh-container installation tests were not run.
+From `/a0`, run `/opt/venv-a0/bin/python -m unittest discover -s usr/plugins/pascal_editor/tests -v`. The tests exercise registration, cleanup, failure rollback, disabled launch, small SSE chunks, and actual MCP calls through Agent Zero's client with isolated scene storage. Browser integration was additionally verified with a temporary room and door, live events, and dock-to-modal handoff. The lifecycle tests also cover dependency installation, checksum rejection, disabled setup, initialization failure, and dependency cleanup.
 
-The portable package must include the editor runtime and `mcp/dist/`, but exclude `mcp/node_modules`, `runtime/.data`, `runtime/.state`, `config.json`, toggle files, caches, and private user data.
+The portable package must include the editor runtime and `mcp/dist/`, but exclude `.deps`, `mcp/node_modules`, `runtime/.data`, `runtime/.state`, `config.json`, toggle files, caches, and private user data.
 
 ## Settings
 

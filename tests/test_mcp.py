@@ -52,16 +52,6 @@ class RegistrationTests(unittest.TestCase):
                 integration.merge_registration(raw)
             self.assertEqual(integration.merge_registration(raw, remove=True), (raw, False))
 
-    def test_hooks_and_no_download_preparation(self):
-        integration.prepare()
-        with patch.object(integration, 'install') as install:
-            hooks.install()
-            install.assert_called_once_with()
-        with patch.object(integration, 'register') as register, patch.object(integration.runtime, 'stop_runtime') as stop:
-            hooks.uninstall()
-            register.assert_called_once_with(remove=True)
-            stop.assert_called_once()
-
     def test_registration_changes_only_mcp_setting(self):
         from helpers import settings
         state = {'mcp_servers': '{"mcpServers":{"other":{"command":"keep"}}}', 'untouched': 'sentinel'}
@@ -103,7 +93,7 @@ class RegistrationTests(unittest.TestCase):
         def save(delta, apply):
             self.assertFalse(apply)
             state.update(delta)
-        with patch.object(settings, 'get_settings', return_value=state), patch.object(settings, 'set_settings_delta', side_effect=save), patch.object(MCPConfig, 'get_instance', return_value=config), patch.object(MCPConfig, 'clear_project_instances'), patch.object(integration.runtime, 'stop_runtime'):
+        with tempfile.TemporaryDirectory() as directory, patch.object(settings, 'get_settings', return_value=state), patch.object(settings, 'set_settings_delta', side_effect=save), patch.object(MCPConfig, 'get_instance', return_value=config), patch.object(MCPConfig, 'clear_project_instances'), patch.object(integration.runtime, 'stop_runtime'), patch.object(integration.runtime, 'ensure_running', return_value={'state': 'running'}), patch.object(hooks, 'install_dependencies'), patch.object(hooks.runtime, 'DEPS_DIR', Path(directory) / '.deps'):
             hooks.install()
             self.assertIs(config.servers[0], other)
             self.assertEqual(len(config.servers[1].get_tools()), 40)
