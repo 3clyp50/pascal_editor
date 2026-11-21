@@ -4,7 +4,7 @@ Agent Zero plugin that embeds the open-source Pascal 3D editor in the right canv
 
 ## Installation
 
-This **1.2.1 Linux x64** package includes the prebuilt editor runtime and MCP bundle. It requires Agent Zero with plugin and right-canvas support, and Linux x64 inside the Agent Zero runtime. The install hook reuses **Node.js 22.13 or newer** when available, otherwise downloads a checksum-verified Node.js **22.22.0** into the plugin's `.deps/node/` directory. This fallback requires access to `nodejs.org` and never changes system packages. The bundled native libraries target Linux x64; other platforms need their own runtime build.
+This **1.2.2 Linux x64** package includes the prebuilt editor runtime and MCP bundle. It requires Agent Zero with plugin and right-canvas support, and Linux x64 inside the Agent Zero runtime. The install hook reuses **Node.js 22.13 or newer** when available, otherwise downloads a checksum-verified Node.js **22.22.0** into the plugin's `.deps/node/` directory. This fallback requires access to `nodejs.org` and never changes system packages. The bundled native libraries target Linux x64; other platforms need their own runtime build.
 
 In Agent Zero's Plugins page, install from this Git repository:
 
@@ -53,6 +53,8 @@ After updating the plugin, save any unsaved scene and refresh Agent Zero to load
 ## Bundled MCP and AI editing
 
 Installing this plugin through Agent Zero automatically runs `hooks.py:install()`. It prepares Node.js, initializes the editor and its local storage, validates the bundled MCP distribution, then registers the `pascal_editor` stdio server in Agent Zero's existing MCP settings. No separate chat UI, global npm installation, cloud account, API key, HTTP MCP listener, or persistent MCP daemon is added.
+
+The MCP resolves system Node.js through `PATH`, so its saved configuration works when Agent Zero moves between images that install Node.js in different locations. If the plugin installed its own Node.js, the MCP continues to use that copy.
 
 The MCP starts on demand through Agent Zero's normal MCP client. The editor and MCP share `runtime/.data/pascal.db`. Installation/update is rerunnable, preserves unrelated MCP servers and per-server preferences, refreshes Pascal's tool catalog, and rolls back newly written registration if initialization fails. The startup extension calls the same hook to restore the editor and reconcile registration before the framework's normal MCP initialization. Disabled plugins are not started. Uninstall removes this plugin's MCP registration, stops the editor, and deletes its downloaded `.deps/` dependencies. Shared system Node.js is left intact; bundled editor dependencies are deleted with the plugin directory. **Export/back up saved scenes before uninstalling: Agent Zero deletes the plugin directory, including its scene database.**
 

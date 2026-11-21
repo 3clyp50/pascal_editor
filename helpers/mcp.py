@@ -38,8 +38,10 @@ def prepare() -> None:
 
 
 def server_config() -> dict:
+    node = runtime.node_executable()
+    command = node if node and Path(node).is_relative_to(runtime.NODE_DIR) else "node"
     return {
-        "type": "stdio", "command": runtime.node_executable() or "node",
+        "type": "stdio", "command": command,
         "args": [str(ENTRY)], "init_timeout": 30, "tool_timeout": 120,
         "description": "Pascal Editor — local saved-scene editing. Supply sceneId on every scene tool call.",
     }
@@ -94,10 +96,11 @@ def merge_registration(raw: str, remove: bool = False) -> tuple[str, bool]:
             else:
                 del servers[key]
         else:
-            updated = {**server_config(), **current}
+            defaults = server_config()
+            updated = {**defaults, **current}
             # Refresh only the plugin-owned launch path; preserve user timeouts,
             # disabled state, disabled_tools, and other per-server preferences.
-            updated.update(command=server_config()["command"], args=[str(ENTRY)])
+            updated.update(command=defaults["command"], args=defaults["args"])
             servers[key] = updated
     elif not remove:
         if isinstance(servers, dict):

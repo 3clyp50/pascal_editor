@@ -17,6 +17,23 @@ from helpers.mcp_handler import MCPServerLocal
 
 
 class RegistrationTests(unittest.TestCase):
+    def test_migrate_absolute_system_node_and_keep_plugin_fallback(self):
+        raw = json.dumps({"mcpServers": {"pascal_editor": {
+            "command": "/usr/bin/node", "args": [str(integration.ENTRY)], "tool_timeout": 77,
+        }}})
+        with patch.object(integration.runtime, "node_executable", return_value="/usr/local/bin/node") as node:
+            migrated, changed = integration.merge_registration(raw)
+            self.assertTrue(changed)
+            entry = json.loads(migrated)["mcpServers"]["pascal_editor"]
+            self.assertEqual(entry["command"], "node")
+            self.assertEqual(entry["tool_timeout"], 77)
+            self.assertEqual(integration.merge_registration(migrated), (migrated, False))
+            binary = integration.runtime.NODE_DIR / "bin" / "node"
+            node.return_value = str(binary)
+            updated, changed = integration.merge_registration(migrated)
+            self.assertTrue(changed)
+            self.assertEqual(json.loads(updated)["mcpServers"]["pascal_editor"]["command"], str(binary))
+
     def test_install_idempotent_preserves_unrelated_and_preferences(self):
         original = {"mcpServers": {"other": {"command": "unrelated", "disabled": True}}, "metadata": 42}
         once, changed = integration.merge_registration(json.dumps(original))
@@ -83,7 +100,7 @@ class RegistrationTests(unittest.TestCase):
             self.assertEqual(state['mcp_servers'], original)
 
     def test_real_install_uninstall_hooks_preserve_other_live_servers(self):
-        from helpers import settings
+        from helpers import plugins, settings
         from helpers.mcp_handler import MCPConfig
         from types import SimpleNamespace
         original = '{"mcpServers":{"other":{"command":"keep"}}}'
@@ -93,7 +110,19 @@ class RegistrationTests(unittest.TestCase):
         def save(delta, apply):
             self.assertFalse(apply)
             state.update(delta)
-        with tempfile.TemporaryDirectory() as directory, patch.object(settings, 'get_settings', return_value=state), patch.object(settings, 'set_settings_delta', side_effect=save), patch.object(MCPConfig, 'get_instance', return_value=config), patch.object(MCPConfig, 'clear_project_instances'), patch.object(integration.runtime, 'stop_runtime'), patch.object(integration.runtime, 'ensure_running', return_value={'state': 'running'}), patch.object(hooks, 'install_dependencies'), patch.object(hooks.runtime, 'DEPS_DIR', Path(directory) / '.deps'):
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            patch.object(plugins, 'get_toggle_state', return_value='enabled'),
+            patch.object(settings, 'get_settings', return_value=state),
+            patch.object(settings, 'set_settings_delta', side_effect=save),
+            patch.object(MCPConfig, 'get_instance', return_value=config),
+            patch.object(MCPConfig, 'clear_project_instances'),
+            patch.object(integration.runtime, 'stop_runtime'),
+            patch.object(integration.runtime, 'ensure_running', return_value={'state': 'running'}),
+            patch.object(integration.runtime, 'get_config', return_value={}),
+            patch.object(hooks, 'install_dependencies'),
+            patch.object(hooks.runtime, 'DEPS_DIR', Path(directory) / '.deps'),
+        ):
             hooks.install()
             self.assertIs(config.servers[0], other)
             self.assertEqual(len(config.servers[1].get_tools()), 40)
